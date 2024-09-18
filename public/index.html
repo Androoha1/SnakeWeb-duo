@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <p id="score1" class="score">0</p>
+        <h1 id="name">WebSnake</h1>
+        <p id="score2" class="score">0</p>
+    </div>
+    <canvas id="field"></canvas>
+    <div class="controls">
+        <button id="createRoom" onclick="createRoom()">Create Room</button>
+        <button id="joinRoom" onclick="joinRoom()">Join Room</button>
+        <p id="roomCode"></p>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
