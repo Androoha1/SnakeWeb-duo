@@ -68,9 +68,9 @@ wss.on('connection', (ws) => {
         field.addSnake(snake);
         field.addApple(apple);
 
-        if (snake.x === apple.x && snake.y === apple.y) {
+        if (snake.head.x === apple.x && snake.head.y === apple.y) {
             snake.grow();
-            apple.relocate();
+            apple.relocate(field);
         }
 
         field.matrix[apple.x][apple.y] = 'a';

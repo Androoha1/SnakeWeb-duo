@@ -5,14 +5,10 @@ import { conf } from '../../snake.conf.js';
 export class GraphicApple extends Apple {
     constructor(field) {
         super();
-
-        if (!field) console.log("no");
-
-        this.field = field;
     }
 
-    draw() {
+    draw(field) {
         let blockSize = conf.field.blockSize;
-        this.field.drawRect(this.x * conf.field.blockSize , this.y * this.field.blockSize, this.field.blockSize , this.field.blockSize , GraphicField.apple_color);
+        field.drawRect(this.x * blockSize , this.y * blockSize, blockSize , blockSize , GraphicField.apple_color);
     }
 }

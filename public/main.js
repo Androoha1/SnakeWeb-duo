@@ -8,7 +8,7 @@ const ws = new WebSocket('ws://localhost:8080');
 
 //objects
 var field = new Field(document.getElementById("field"));
-var snake = new Snake([0 , 0] , field);
+var snake = new Snake([0 , 0]);
 var apple = new Apple(field);
 
 document.addEventListener('keydown', function(event) {
@@ -29,6 +29,6 @@ ws.onmessage = (event) => {
 
     //redraw the battle field.
     field.draw();
-    snake.draw();
-    apple.draw();
+    snake.draw(field);
+    apple.draw(field);
 };

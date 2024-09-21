@@ -11,8 +11,10 @@ export class Apple {
         this.y = otherApple.y;
     }
 
-    relocate() {
-        this.x = Math.floor(Math.random() * conf.field.cols);
-        this.y = Math.floor(Math.random() * conf.field.rows);
+    relocate(field) {
+        do {
+            this.x = Math.floor(Math.random() * conf.field.cols);
+            this.y = Math.floor(Math.random() * conf.field.rows);
+        } while(field.matrix[this.x][this.y] != '.');
     }
 }
