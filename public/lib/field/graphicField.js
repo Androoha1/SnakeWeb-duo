@@ -1,4 +1,5 @@
 import {Field} from './field.js';
+import {conf} from '../../snake.conf.js';
 
 export class GraphicField extends Field {
     static field_color = '#113510';
@@ -6,12 +7,11 @@ export class GraphicField extends Field {
     static colorSet2 = ['#52A414', '#6DDE19'];
     static apple_color = 'red';
 
-    constructor(htmlElement , rows , cols , blockSize) {
-        super(rows , cols);
-        this.blockSize = blockSize;
+    constructor(htmlElement) {
+        super();
         this.field = htmlElement;
-        this.field.height = rows * blockSize;
-        this.field.width = cols * blockSize;
+        this.field.height = conf.field.rows * conf.field.blockSize;
+        this.field.width = conf.field.cols * conf.field.blockSize;
         this.context = field.getContext("2d");
     }
 

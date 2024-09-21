@@ -1,13 +1,13 @@
+import { conf } from '../../snake.conf.js';
+
 export class Field {
-    constructor(rows , cols) {
-        this.rows = rows;
-        this.cols = cols;
-        this.matrix = Array.from({ length: this.rows }, () => Array.from({ length: this.cols }, () => '.'));
+    constructor() {
+        this.matrix = Array.from({ length: conf.field.rows }, () => Array.from({ length: conf.field.cols }, () => '.'));
     }
 
     clear() {
-        for (let i = 0; i < this.rows; ++i)
-            for (let j = 0; j < this.cols; ++j)
+        for (let i = 0; i < conf.field.rows; ++i)
+            for (let j = 0; j < conf.field.cols; ++j)
                 this.matrix[i][j] = '.';
     }
 
@@ -15,10 +15,14 @@ export class Field {
         this.matrix[snake.head.x][snake.head.y] = '1';
     }
 
+    addApple(apple) {
+        this.matrix[apple.x][apple.y] = 'a';
+    }
+
     drawInText() {
-        for (let i = 0; i < this.rows; ++i) {
+        for (let i = 0; i < conf.field.rows; ++i) {
             let output = '';
-            for (let j = 0; j < this.cols; ++j)
+            for (let j = 0; j < conf.field.cols; ++j)
                 output += this.matrix[i][j] + ' ';
             console.log(output);
         }
