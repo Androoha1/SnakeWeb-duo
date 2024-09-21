@@ -18,11 +18,19 @@ export class Snake {
         this.velocityY = source.velocityY;
     }
 
-    move() {
+    output_body() {
+        let output = '  ';
+        for (let i = 0; i < this.size-1; ++i)
+            output += this.body[i].x + ':' + this.body[i].y + ' , ';
+        console.log(output);
+    }
+
+    move() { console.log("size: " + this.size); this.output_body();
         //movement: last segment - to the head position.
         if (this.size - 1) {
             this.body[this.size-2].moveTo(this.head);
-            this.body[this.size-2].swap(this.body[0]);
+            this.body.unshift(this.body[this.size-2]);
+            this.body.splice(this.size-1 , 1);
         }
         this.head.x += this.velocityX;
         this.head.y += this.velocityY;
@@ -34,7 +42,7 @@ export class Snake {
         else if (this.head.y < 0) this.head.y = conf.field.rows-1;
     }
 
-    grow() { ++this.length;
+    grow() { ++this.size;
         this.body.push(new BodySegment(this.head.x , this.head.y));
     }
 
