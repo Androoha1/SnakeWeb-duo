@@ -52,7 +52,6 @@ export class Snake {
         let dir = JSON.parse(event.data);
         if (!this.dirQueue.length) return this.dirQueue.push(dir);
         let lastDir = this.dirQueue[this.dirQueue.length - 1];
-        console.log("lastDir: " + lastDir);
         if (dir != lastDir  && ((dir[0] && dir[0]+lastDir[0]) || (dir[1] && dir[1]+lastDir[1])))
             this.dirQueue.push(dir);
     }

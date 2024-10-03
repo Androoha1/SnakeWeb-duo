@@ -11,6 +11,18 @@ var field = new Field(document.getElementById("field"));
 var snake = new Snake([0 , 0]);
 var apple = new Apple(field);
 
+//when upadate comes from the server.
+ws.onmessage = (event) => {
+    const receivedData = JSON.parse(event.data);
+
+    field.update(receivedData.matrix);
+    snake.copy(receivedData.snake);
+    apple.copy(receivedData.apple);
+
+    requestAnimationFrame(draw);
+
+};
+
 document.addEventListener('keydown', function(event) {
     function sendKey(key) {
         ws.send(JSON.stringify(key));
@@ -25,17 +37,8 @@ document.addEventListener('keydown', function(event) {
     }
 })
 
-//when upadate comes from the server.
-ws.onmessage = (event) => {
-    const receivedData = JSON.parse(event.data);
-
-    //update the field matrix accroding to the update
-    field.update(receivedData.matrix);
-    snake.copy(receivedData.snake);
-    apple.copy(receivedData.apple);
-
-    //redraw the battle field.
+function draw() {
     field.draw();
     snake.draw(field);
     apple.draw(field);
-};
+}
