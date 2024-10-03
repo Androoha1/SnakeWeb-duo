@@ -2,7 +2,7 @@ import {Field} from './field.js';
 import {conf} from '../../snake.conf.js';
 
 export class GraphicField extends Field {
-    static field_color = '#113510';
+    static field_colors = ['#113510' , '#164715'];
     static colorSet1 = ['#AE6503', '#F2A947'];
     static colorSet2 = ['#52A414', '#6DDE19'];
     static apple_color = 'red';
@@ -25,6 +25,15 @@ export class GraphicField extends Field {
     }
 
     draw() {
-        this.drawRect(0 , 0 , this.field.width , this.field.height , GraphicField.field_color);
+        for (let i = 0; i < conf.field.rows; ++i) {
+            for (let j = 0; j < conf.field.cols; ++j) {
+                let colour = '';
+                switch ((i+j)%2) {
+                    case 0: colour = GraphicField.field_colors[0]; break;
+                    case 1: colour = GraphicField.field_colors[1]; break;
+                }
+                this.drawRect(j * conf.field.blockSize , i * conf.field.blockSize , conf.field.blockSize , conf.field.blockSize , colour);
+            }
+        }
     }
 }
