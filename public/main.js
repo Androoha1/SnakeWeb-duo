@@ -12,9 +12,16 @@ var snake = new Snake([0 , 0]);
 var apple = new Apple(field);
 
 document.addEventListener('keydown', function(event) {
-    let key = event.key;
-    if (key === 'w' || key === 'a' || key === 's' || key === 'd') {
+    function sendKey(key) {
         ws.send(JSON.stringify(key));
+    }
+
+    let key = event.key;
+    switch(key) {
+        case 'w': sendKey([0 , -1]); break;
+        case 's': sendKey([0 , 1]); break;
+        case 'a': sendKey([-1 , 0]); break;
+        case 'd': sendKey([1 , 0]); break;
     }
 })
 

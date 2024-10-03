@@ -29,26 +29,19 @@ field.addSnake(snake);
 // WebSocket connection event on the server
 const clients = new Set();
 wss.on('connection', (ws) => {
-    console.log('Client connected');
     // Check if the client is already connected
     if (clients.has(ws)) {
         console.log('Client already connected, closing existing connection');
         ws.close();
         return;
     }
-    // Add the client to the set of connected clients
+
+    console.log('Client connected');
     clients.add(ws);
 
+    // If client pressed a key.
     ws.onmessage = (event) => {
-        let receivedData = JSON.parse(event.data);
-        let dir;
-        switch (receivedData) {
-            case 'w': dir = [0 , -1]; break;
-            case 'a': dir = [-1 , 0]; break;
-            case 's': dir = [0 , 1]; break;
-            case 'd': dir = [1 , 0];
-        }
-        snake.changeDirection(dir);
+        snake.addDirToQueue(event);
     }
 
     // The data, packed into a json ot send to the client.
@@ -77,7 +70,7 @@ wss.on('connection', (ws) => {
         
         ws.send(JSON.stringify(dataToSend));
 
-    } , 300);
+    } , 200);
 
 
 
