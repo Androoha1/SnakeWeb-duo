@@ -1,7 +1,8 @@
 //imports
 import { Field } from '../public/lib/field/field.js';
 import {Snake} from '../public/lib/snake/snake.js';
-import {Apple} from '../public/lib/apple/apple.js'
+import {Apple} from '../public/lib/apple/apple.js';
+import {conf} from '../public/snake.conf.js';
 import express from 'express';
 import http from 'http';
 import {WebSocketServer} from 'ws';
@@ -70,7 +71,7 @@ wss.on('connection', (ws) => {
         
         ws.send(JSON.stringify(dataToSend));
 
-    } , 200);
+    } , conf.dTime);
 
 
 

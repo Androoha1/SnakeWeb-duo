@@ -1,22 +1,23 @@
-import { BodySegment } from "./body-segment.js";
+import { BodySegment } from "./bodySegment.js";
 import { conf } from "../../snake.conf.js"
+import { Vector } from "../core/vector.js"; 
 
 export class Snake {
     constructor(coordinates) {
         this.head = new BodySegment(coordinates[0] , coordinates[1]);
         this.size = 3;
         this.body = [new BodySegment(0 , 1) , new BodySegment(-1 , 1)];
-        this.velocityX = 1;
-        this.velocityY = 0;
+        this.velocity = new Vector(1 , 0);
         this.dirQueue = [];
     }
 
     copy(source) {
-        this.head = source.head;
+        this.head.x = source.head.x;
+        this.head.y = source.head.y;
         this.size = source.size;
         this.body = [...source.body]; //deep copy of an array
-        this.velocityX = source.velocityX;
-        this.velocityY = source.velocityY;
+        this.velocity.x= source.velocity.x;
+        this.velocity.y = source.velocity.y;
     }
 
     output_body() { //debug function
@@ -34,8 +35,8 @@ export class Snake {
             this.body.unshift(this.body[this.size-2]);
             this.body.splice(this.size-1 , 1);
         }
-        this.head.x += this.velocityX;
-        this.head.y += this.velocityY;
+        this.head.x += this.velocity.x;
+        this.head.y += this.velocity.y;
 
         //teleport if out of borders.
         if (this.head.x === conf.field.cols) this.head.x = 0;
@@ -44,22 +45,26 @@ export class Snake {
         else if (this.head.y < 0) this.head.y = conf.field.rows-1;
     }
 
-    grow() { ++this.size;
-        this.body.push(new BodySegment(this.head.x , this.head.y));
+    grow() {
+        this.body.push(new BodySegment(this.body[this.size-2].x , this.body[this.size-2].y));
+        ++this.size;
     }
 
     addDirToQueue(event) { //data recieved here is in JSON
-        let dir = JSON.parse(event.data);
-        if (!this.dirQueue.length) return this.dirQueue.push(dir);
-        let lastDir = this.dirQueue[this.dirQueue.length - 1];
-        if (dir != lastDir  && ((dir[0] && dir[0]+lastDir[0]) || (dir[1] && dir[1]+lastDir[1])))
-            this.dirQueue.push(dir);
+        let data = JSON.parse(event.data);
+        let dir = new Vector(data[0] , data[1]);
+
+        if (this.dirQueue.length === 0) {
+            if (!dir.isColinear(this.velocity)) this.dirQueue.push(dir);
+        }
+        else {
+            let lastDir = this.dirQueue[this.dirQueue.length - 1];
+            if (!dir.isColinear(lastDir)) this.dirQueue.push(dir);
+        }
     }
 
     changeDirection() {
-        let dir = this.dirQueue.shift();
-        this.velocityX = dir[0];
-        this.velocityY = dir[1];
+        this.velocity = this.dirQueue.shift();
     }
 
     drawInText() {

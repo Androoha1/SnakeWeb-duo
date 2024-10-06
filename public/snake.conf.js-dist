@@ -2,6 +2,7 @@ export const conf = {
     field: {
         rows: 20,
         cols: 20,
-        blockSize: 30
-    }
+        blockSize: 40
+    },
+    dTime: 200
 }
