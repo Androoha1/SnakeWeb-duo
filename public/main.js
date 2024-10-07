@@ -55,31 +55,8 @@ function renderGameField(timestamp) {
 
     
     //////////////////////////////
-
     progress = Math.min((timestamp - lastUpdateTime) / conf.dTime, 1);
-
-    if (snake.head.x - receivedSnake.head.x > 2) snake.head.x = -1;
-    else if (snake.head.x - receivedSnake.head.x < -2) snake.head.x = conf.field.cols;
-    else if (snake.head.y - receivedSnake.head.y > 2) snake.head.y = -1;
-    else if (snake.head.y - receivedSnake.head.y < -2) snake.head.y = conf.field.rows;
-
-    snake.head.x = (1 - progress) * snake.head.x + progress * receivedSnake.head.x;
-    snake.head.y = (1 - progress) * snake.head.y + progress * receivedSnake.head.y;
-
-    for (let i = 0; i < snake.size-1; ++i) {
-        try {
-        if (snake.body[i].x - receivedSnake.body[i].x > 2) snake.body[i].x = -1;
-        else if (snake.body[i].x - receivedSnake.body[i].x < -2) snake.body[i].x = conf.field.cols;
-        else if (snake.body[i].y - receivedSnake.body[i].y > 2) snake.body[i].y = -1;
-        else if (snake.body[i].y - receivedSnake.body[i].y < -2) snake.body[i].y = conf.field.rows;
-
-        snake.body[i].x = (1 - progress) * snake.body[i].x + progress * receivedSnake.body[i].x;
-        snake.body[i].y = (1 - progress) * snake.body[i].y + progress * receivedSnake.body[i].y;
-        } catch (error) {
-            console.log(i , '!!!');
-        }
-    }
-
+    snake.move(progress , receivedSnake);
     ////////////////////////////
 
     field.draw();

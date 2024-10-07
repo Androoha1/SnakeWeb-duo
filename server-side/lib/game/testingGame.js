@@ -22,13 +22,13 @@ export class TestingGame {
         var dataToSend = {
             matrix: this.field.matrix,
             snake: this.snake,
-            apple: this.apple
+            apple: this.apple,
         };
         this.ws.send(JSON.stringify(dataToSend)); //initial pack
 
         //start the gaeme loop
         const interval = setInterval(() => {
-            if (this.ifBump()) {this.snake.reset([1,1]);}
+            if (this.ifBump()) this.snake.reset([1,1]);
             this.snake.move();
             this.field.clear();
             this.field.addSnake(this.snake);
