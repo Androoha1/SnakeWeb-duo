@@ -6,49 +6,50 @@ import {conf} from '../../../public/snake.conf.js';
 export class TestingGame {
     constructor(ws) {
         this.ws = ws;
+        //main objects initialization
+        this.field = new Field(20 , 20);
+        this.snake = new Snake([1,1] , this.field);
+        this.apple = new Apple(this.field);
     }
 
     start() {
-        //main objects initialization
-        var field = new Field(20 , 20);
-        var snake = new Snake([1,1] , field);
-        var apple = new Apple(field);
         //fill the matrix
-        field.addApple(apple);
-        field.addSnake(snake);
+        this.field.addApple(this.apple);
+        this.field.addSnake(this.snake);
 
         // The data, packed into a json ot send to the client.
         var dataToSend = {
-            matrix: field.matrix,
-            snake: snake,
-            apple: apple
+            matrix: this.field.matrix,
+            snake: this.snake,
+            apple: this.apple
         };
         this.ws.send(JSON.stringify(dataToSend)); //initial pack
 
         //start the gaeme loop
         const interval = setInterval(() => {
-            snake.move();
-            field.clear();
-            field.addSnake(snake);
-            field.addApple(apple);
+            this.snake.move();
+            this.field.clear();
+            this.field.addSnake(this.snake);
+            this.field.addApple(this.apple);
 
-            if (snake.head.x === apple.x && snake.head.y === apple.y) {
-                snake.grow();
-                field.removeApple(apple);
-                apple.relocate(field);
+            if (this.snake.head.isCollision(this.apple)) {
+                this.snake.grow();
+                this.field.removeApple(this.apple);
+                this.apple.relocate(this.field);
             }
         
             this.ws.send(JSON.stringify(dataToSend));
 
             console.clear();
-            field.outputMatrix();
-            console.log("Snake head: [", snake.head.x, ' , ', snake.head.y, ']');
+            this.field.outputMatrix();
+            console.log("Snake head: [", this.snake.head.x, ' , ', this.snake.head.y, ']');
+            console.log("Apple cord: [", this.apple.x, ' , ', this.apple.y, ']');
 
         } , conf.dTime);
 
         // If client pressed a key.
         this.ws.onmessage = (event) => {
-            snake.addDirToQueue(event);
+            this.snake.addDirToQueue(event);
         }
 
         // Handle WebSocket close event and terminate the game loop

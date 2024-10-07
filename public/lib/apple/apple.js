@@ -1,9 +1,9 @@
+import { Dot } from '../core/dot.js';
 import { conf } from '../../snake.conf.js';
 
-export class Apple {
-    constructor() {
-        this.x = Math.floor(conf.field.cols / 2);
-        this.y = Math.floor(conf.field.rows / 2);
+export class Apple extends Dot{
+    constructor(x , y) {
+        super(Math.floor(conf.field.cols / 2) , Math.floor(conf.field.rows / 2));
     }
 
     copy(otherApple) {

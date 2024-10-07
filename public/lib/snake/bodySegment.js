@@ -1,9 +1,9 @@
+import { Dot } from '../core/dot.js';
 import { Vector } from '../core/vector.js';
 
-export class BodySegment {
+export class BodySegment extends Dot{
     constructor(x , y) {
-        this.x = x;
-        this.y = y;
+        super(x , y);
     }
 
     moveToCor(x , y) {
