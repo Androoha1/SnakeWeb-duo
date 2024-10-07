@@ -11,6 +11,14 @@ export class Snake {
         this.dirQueue = [];
     }
 
+    reset() {
+        this.head = new BodySegment(coordinates[0] , coordinates[1]);
+        this.size = 3;
+        this.body = [new BodySegment(0 , 1) , new BodySegment(-1 , 1)];
+        this.velocity = new Vector(1 , 0);
+        this.dirQueue = [];
+    }
+
     copy(source) {
         this.head.x = source.head.x;
         this.head.y = source.head.y;

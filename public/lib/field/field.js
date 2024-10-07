@@ -12,14 +12,21 @@ export class Field {
     }
 
     addSnake(snake) {
-        this.matrix[snake.head.x][snake.head.y] = '1';
+        this.matrix[snake.head.y][snake.head.x] = '1';
+        for (let i = 0; i < snake.size-1; ++i) {
+            this.matrix[snake.body[i].y][snake.body[i].x] = '0';
+        }
     }
 
     addApple(apple) {
-        this.matrix[apple.x][apple.y] = 'a';
+        this.matrix[apple.y][apple.x] = 'a';
     }
 
-    drawInText() {
+    removeApple(apple) {
+        this.matrix[apple.y][apple.x] = '.';
+    }
+
+    outputMatrix() {
         for (let i = 0; i < conf.field.rows; ++i) {
             let output = '';
             for (let j = 0; j < conf.field.cols; ++j)

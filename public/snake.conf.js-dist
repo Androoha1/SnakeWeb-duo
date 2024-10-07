@@ -1,7 +1,7 @@
 export const conf = {
     field: {
-        rows: 20,
-        cols: 20,
+        rows: 21,
+        cols: 21,
         blockSize: 40
     },
     dTime: 200

@@ -14,7 +14,7 @@ export class TestingGame {
         var snake = new Snake([1,1] , field);
         var apple = new Apple(field);
         //fill the matrix
-        field.matrix[apple.x][apple.y] = 'a';
+        field.addApple(apple);
         field.addSnake(snake);
 
         // The data, packed into a json ot send to the client.
@@ -34,12 +34,15 @@ export class TestingGame {
 
             if (snake.head.x === apple.x && snake.head.y === apple.y) {
                 snake.grow();
+                field.removeApple(apple);
                 apple.relocate(field);
             }
-
-            field.matrix[apple.x][apple.y] = 'a';
         
             this.ws.send(JSON.stringify(dataToSend));
+
+            console.clear();
+            field.outputMatrix();
+            console.log("Snake head: [", snake.head.x, ' , ', snake.head.y, ']');
 
         } , conf.dTime);
 
