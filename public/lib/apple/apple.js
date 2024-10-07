@@ -15,7 +15,7 @@ export class Apple extends Dot{
         do {
             this.x = Math.floor(Math.random() * conf.field.cols);
             this.y = Math.floor(Math.random() * conf.field.rows);
-        } while(field.matrix[this.x][this.y] != '.');
+        } while(field.matrix[this.y][this.x] != '.');
         field.addApple(this);
     }
 }

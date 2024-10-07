@@ -11,6 +11,11 @@ export class Field {
                 this.matrix[i][j] = '.';
     }
 
+    getSectorContent(dot) {
+        console.log('getSector: ', dot.x , ' ', dot.y);
+        return this.matrix[dot.y][dot.x];
+    }
+
     addSnake(snake) {
         this.matrix[snake.head.y][snake.head.x] = '1';
         for (let i = 0; i < snake.size-1; ++i) {

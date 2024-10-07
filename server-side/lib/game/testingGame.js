@@ -1,6 +1,7 @@
 import { Field } from '../../../public/lib/field/field.js';
 import {Snake} from '../../../public/lib/snake/snake.js';
 import {Apple} from '../../../public/lib/apple/apple.js';
+import { Dot } from '../../../public/lib/core/dot.js';
 import {conf} from '../../../public/snake.conf.js';
 
 export class TestingGame {
@@ -27,6 +28,7 @@ export class TestingGame {
 
         //start the gaeme loop
         const interval = setInterval(() => {
+            if (this.ifBump()) {this.snake.reset([1,1]);}
             this.snake.move();
             this.field.clear();
             this.field.addSnake(this.snake);
@@ -59,6 +61,14 @@ export class TestingGame {
             // Clear the interval to stop the game loop
             clearInterval(interval);
         });
+    }
+
+    ifBump() {
+        let x = this.snake.head.next(this.snake.velocity);
+        if (this.field.getSectorContent(x) === '0') {
+            console.log("Debug: head:", this.snake.head.x, ',', this.snake.head.y, "  ", x.x, ',', x.y);
+            return true;
+        }
     }
 
     stop() {

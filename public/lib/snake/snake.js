@@ -11,7 +11,7 @@ export class Snake {
         this.dirQueue = [];
     }
 
-    reset() {
+    reset(coordinates) { console.log('Opa');
         this.head = new BodySegment(coordinates[0] , coordinates[1]);
         this.size = 3;
         this.body = [new BodySegment(0 , 1) , new BodySegment(-1 , 1)];
@@ -63,7 +63,7 @@ export class Snake {
         let dir = new Vector(data[0] , data[1]);
 
         if (this.dirQueue.length === 0) {
-            if (!dir.isColinear(this.velocity)) this.dirQueue.push(dir);
+            if (!dir.isColinear(this.velocity)) this.velocity = dir;
         }
         else {
             let lastDir = this.dirQueue[this.dirQueue.length - 1];
